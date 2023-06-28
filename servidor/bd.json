@@ -1,0 +1,52 @@
+{
+  "Heroes": [
+    {
+      "id": 1,
+      "nombre": "Sumner",
+      "alias": "phenylephrine hydrochloride",
+      "editorial": "dc",
+      "fuerza": 78,
+      "armas": "Armadura"
+    },
+    {
+      "id": 2,
+      "nombre": "Leena",
+      "alias": "Sodium Fluoride",
+      "editorial": "marvel",
+      "fuerza": 72,
+      "armas": "Espada"
+    },
+    {
+      "id": 3,
+      "nombre": "Caritta",
+      "alias": "DEXTROSE MONOHYDRATE",
+      "editorial": "marvel",
+      "fuerza": "88",
+      "armas": "Espada"
+    },
+    {
+      "id": 4,
+      "nombre": "Fritz",
+      "alias": "Dextromethorphan Hydrobromide, Guaifenesin, Phenylephrine Hydrochloride",
+      "editorial": "marvel",
+      "fuerza": 83,
+      "armas": "Armadura"
+    },
+    {
+      "id": 5,
+      "nombre": "Glennis",
+      "alias": "Papaya",
+      "editorial": "dc",
+      "fuerza": 25,
+      "armas": "Martillo"
+    },
+    {
+      "id": 6,
+      "nombre": "more",
+      "alias": "Ibuprofeno",
+      "editorial": "marvel",
+      "fuerza": "70",
+      "arma": "Espada"
+    }
+  ]
+}
