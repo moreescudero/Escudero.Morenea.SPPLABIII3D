@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heroes</title>
+    <script src="../js/main.js" type="module"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+    <header>
+        <nav id="nav">
+            <img id="logo" src="../img/pngsuperheroe-removebg-preview.png" alt="">
+            <ul>
+                <li><a href="principal.html" id="principal">Home</a></li>
+                <li><a href="#i">Personajes</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <header>
+        <h1>Crud Heroes</h1>
+    </header>
+    <form id="fr">
+        <div class="container">
+            <fieldset id="Informacion">
+                <h2>Informacion del SuperHeroe</h2>
+                <div class="row">
+                    <div class="col-lg-1">
+                    <label id="nmb">Nombre</label>
+                    <input type="text" id="nombre" placeholder="Ingrese nombre">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1">
+                <label id="al">Alias</label>
+                <input type="text" id="alias" placeholder="Ingrese alter-ego">
+            </div>
+                </div>
+                    <fieldset id="Editorial">
+                <div class="row">
+                        <label id="ed">Editorial</label>  
+                         <div class="col-sm-8">
+                            <label> 
+                            <img id="mrvlpng" src="../img/marvelpng.png" alt="">
+                            </label> 
+                            <input type="radio" name="editorial" id="marvel" value="marvel">
+                        </div>
+                        <div class="col-sm-8">
+                            <label>
+                                <img id="dcpng" src="../img/DC_Comics_logo.svg.png" alt="">
+                            </label>
+                            <input type="radio" name="editorial" id="dc" value="dc" checked>
+                        </div>
+                </div>
+                    </fieldset>
+                    <div class="row">
+                        <div class="col-lg-1">
+                <label id="frz">Fuerza</label>
+                <input type="range" id="fuerza">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-1">
+                <label id="arma">Arma</label>
+                <select id="armas"></select>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <div class="col-md-12 text-center">
+                        <section id="botones">
+                    <input type="button" value="Guardar" id="guardar">
+                    <input type="button" value="Cancelar" id="cancelar">
+                </section>
+                </div>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    <div id="spinner"></div>
+    <div class="container">    
+        <div class="row">
+            <div class="col-lg-3">
+                <label id="filtrarEditorial">Filtrar editorial</label>
+                <select id="sfiltrarEditorial"></select>
+            </div>
+            <div class="col-lg-3">
+                <label id="promedioFuerza">Promedio</label>
+                <input type="text" id="tpromedioFuerza">
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="contenedor">
+        <div class="row">
+            <div class="col-2">
+                <label >Nombre</label>
+                <input type="checkbox"  checked id="nombre" name="nombre">
+            </div>
+            <div class="col-2">
+                <label >Alias</label>
+                <input type="checkbox"  checked id="alias" name="alias">
+            </div>
+            <div class="col-2">
+                <label >Editorial</label>
+                <input  type="checkbox" checked id="editorial" name="editorial">
+            </div>
+            <div class="col-2">
+                <label >Fuerza</label>
+                <input  type="checkbox" checked id="fuerza" name="fuerza">
+            </div>
+            <div class="col-2">
+                <label >Armas</label>
+                <input type="checkbox"  checked id="armas" name="armas">
+            </div>
+        </div>
+    </div>
+    <div class="container" id="tTabla"></div>
+    <footer>
+        <nav id="nav">
+            <ul>
+                <li><a href="PrimerParcial/principal.html" onclick="seleccionar()">Home</a></li>
+                <li><a href="#i">Personajes</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+        <p>Laboratorio III -Todos los Derechos Reservados &copy;</p>
+    </footer>
+</body>
+</html>
