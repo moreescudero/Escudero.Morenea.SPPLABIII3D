@@ -8,6 +8,7 @@ const URL= "http://localhost:3000/Heroes";
 const fr = document.getElementById('fr');
 const tabla = document.getElementById('tTabla');
 const principal = document.getElementById('principal');
+const spinner = document.getElementById('spinner');
 principal.addEventListener('click', (e) =>
 {
     e.preventDefault();
@@ -18,8 +19,6 @@ let id = 0;
 let bandera = false;
 
 let array = [];
-localStorage.setItem('heroes',JSON.stringify(array));
-
 
 window.addEventListener('DOMContentLoaded', () => 
 {
@@ -57,6 +56,10 @@ window.addEventListener('click', (x) =>
         id = indice;
         actualizar(seleccionado);
         bandera = true;
+        fr.borrar.addEventListener('click', (x) =>
+        {
+            borrar(seleccionado);
+        });
     }
 });
 
@@ -73,8 +76,30 @@ function filtrar()
         }
     });
     MapeadoPromedio(elementos);
+    MapMaximaFuerza(elementos);
+    MapMinimaFuerza(elementos);
     ModificarTabla(tabla,elementos);
 }
+
+function borrar(borrarHeroe){
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener("readystatechange",()=>{
+      if(xhr.readyState == 4){
+        if(xhr.status >= 200 && xhr.status< 300){
+           listaHeroes= JSON.parse(xhr.responseText);
+        }else{
+          console.error("Error: " + xhr.status + "-" + xhr.statusText);
+        }
+        spinner.classList.add("oculto");
+      }
+    });
+    xhr.open("DELETE", URL + "/" + borrarHeroe.id);
+    xhr.send();
+    
+    fr.borrar.disabled = true;
+    fr.guardar.value="Guardar";
+    fr.borrar.disabled=true;
+  }
 
 function actualizar(seleccionado)
 {
@@ -91,8 +116,7 @@ function actualizar(seleccionado)
     }
     const dc = document.getElementById('dc');
     const marvel = document.getElementById('marvel');
-
-    if(seleccionado.transaccion == "dc")
+    if(seleccionado.editorial == "dc")
     {
         dc.checked = true;
     }
@@ -120,7 +144,7 @@ function guardar()
     const id = generarId();
     const nombre = document.getElementById('nombre').value;
     const alias = document.getElementById('alias').value;
-    const editorial = document.getElementsByName('editorial');
+    const editorial = document.getElementsByName('rEditorial');
     const fuerza = document.getElementById('fuerza').value;
     const arma = document.getElementById('armas').options[document.getElementById('armas').selectedIndex].text;
 
@@ -134,28 +158,32 @@ function guardar()
         }
     });
 
-    const heroe = new Superheroe(id, nombre, alias, elemento, fuerza, arma);
-    console.log(heroe);
+    if(nombre != "" && alias != "" && elemento != "" && fuerza != undefined && arma != "")
+    {
+        const heroe = new Superheroe(id, nombre, alias, elemento, fuerza, arma);
+        console.log(heroe);
 
-    const xhr = new XMLHttpRequest();
-    xhr.addEventListener("readystatechange",()=>{
-      if(xhr.readyState == 4){
-        if(xhr.status >= 200 && xhr.status< 300){
-           array= JSON.parse(xhr.responseText);
-           ModificarTabla(seccionTabla, array); 
-        }else{
-          console.error("Error: " + xhr.status + "-" + xhr.statusText);
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener("readystatechange",()=>{
+        if(xhr.readyState == 4){
+            if(xhr.status >= 200 && xhr.status< 300){
+            array= JSON.parse(xhr.responseText);
+            ModificarTabla(seccionTabla, array); 
+            }else{
+            console.error("Error: " + xhr.status + "-" + xhr.statusText);
+            }
+            spinner.classList.add("oculto");
         }
-  
-        loader.classList.add("oculto");
-      }
-  
-    });
-    xhr.open("POST", URL)
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  
-    xhr.send(JSON.stringify(heroe));
-  
+        });
+        xhr.open("POST", URL)
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    
+        xhr.send(JSON.stringify(heroe));
+    }
+    else
+    {
+        alert("Error: Falta un dato ;(");
+    }
     Limpiar();
 }
 
@@ -165,19 +193,20 @@ function modificar()
     {
         if(x.id == id)
         {
+            
             x.nombre = document.getElementById('nombre').value;
             x.alias = document.getElementById('alias').value;
-            const editorial = document.getElementsByName('editorial');
+            const editorial = document.getElementsByName('rEditorial');
             x.fuerza = document.getElementById('fuerza').value;
             x.armas = document.getElementById('armas').options[document.getElementById('armas').selectedIndex].text;
 
             let elemento;
 
-            editorial.forEach((x) => 
+            editorial.forEach((i) => 
             {
-                if(x.checked)
+                if(i.checked)
                 {
-                    elemento = x.value;
+                    elemento = i.value;
                 }
             });
 
@@ -202,7 +231,6 @@ function modificar()
 
 function Limpiar()
 {
-    localStorage.setItem('heroes',JSON.stringify(array));
     fr.nombre.value = "";
     fr.fuerza.value = 50;
     fr.alias.value = "";
@@ -233,15 +261,62 @@ function MapeadoPromedio(elemento){
     var fuerzaTotal = fuerza.reduce(function(total, fuerza) {
       return parseInt(total + fuerza);
     }, 0)
-    console.log(fuerza);
     const txt= document.getElementById("tpromedioFuerza");
 
     const promedio = fuerzaTotal / elemento.length;
     txt.value= promedio;
-  }
+}
+
+function MapMaximaFuerza(elemento){
+    let fuerza = [];
+    
+    fuerza = elemento.map(e=> parseInt(e.fuerza));
+    
+    var fuerzaMax = fuerza.reduce(function(fuerzaAnterior, fuerza) {
+        if(fuerzaAnterior > fuerza){
+            return fuerzaAnterior;
+        }
+        else{
+            return fuerza;
+        }
+    }, 0)
+    const txt= document.getElementById("tmaximaFuerza");
+    txt.value= fuerzaMax;
+}
+
+function MapMinimaFuerza(elemento){
+    let fuerza = [];
+    
+    fuerza = elemento.map(e=> parseInt(e.fuerza));
+    var bandera = false;
+
+    var fuerzaMinima = fuerza.reduce(function(fuerzaAnterior, fuerza) {
+        if(fuerzaAnterior > fuerza || !bandera) {
+            bandera = true; 
+            return fuerza;
+        }
+        else {
+            return fuerzaAnterior;
+        }
+    }, 0)
+    console.log(fuerza);
+    const txt= document.getElementById("tminimaFuerza");
+    txt.value= fuerzaMinima;
+}
+
+function checkear(){
+    let aObtener = JSON.parse(localStorage.getItem('checkboxes'));
+
+    if(aObtener != null) {
+        for(let i=0; i<aObtener.length; i++) {
+            checkboxes[i].checked = aObtener[i];
+        }
+    }
+    filtrarAtributos();
+}
 
 async function GetHeroes (url) {
-    //loader.classList.remove("oculto");
+    spinner.classList.remove("oculto");
     try {
         let rta= await fetch(url);
         if(!rta.ok) throw Error("Error: " + rta.status + "-" + rta.statusText);
@@ -249,15 +324,29 @@ async function GetHeroes (url) {
         console.log(array);
         tabla.appendChild(CrearTabla(array));
         MapeadoPromedio(array);
+        MapMaximaFuerza(array);
+        MapMinimaFuerza(array);
+        checkear();
+
+        localStorage.setItem('heroes', JSON.stringify(array));
     } catch (err) {
         console.error(err.message);
     }finally {
-       // loader.classList.add("oculto");
+        spinner.classList.add("oculto");
     }
   }
 
 const checkboxes = document.querySelectorAll('#contenedor input[type="checkbox"]');
 checkboxes.forEach(e=> {e.addEventListener('change', filtrarAtributos) });
+
+function guardarCheckboxes(){
+    var aCheckboxes = [];
+
+    checkboxes.forEach((x) => {
+        aCheckboxes.push(x.checked);
+    });
+    localStorage.setItem('checkboxes', JSON.stringify(aCheckboxes));
+}
 
 function filtrarAtributos() {
   const checkboxes = document.querySelectorAll('#contenedor input[type="checkbox"]');
@@ -278,6 +367,7 @@ function filtrarAtributos() {
     return nuevoObjeto;
   });
   ModificarTabla(tabla, resultado);
+  guardarCheckboxes();
 }
 
 

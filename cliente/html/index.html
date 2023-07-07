@@ -10,125 +10,136 @@
     <link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
-    <header>
-        <nav id="nav">
-            <img id="logo" src="../img/pngsuperheroe-removebg-preview.png" alt="">
-            <ul>
-                <li><a href="principal.html" id="principal">Home</a></li>
-                <li><a href="#i">Personajes</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Contacto</a></li>
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <!-- <nav id="nav"> -->
+            <a href="" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                <img id="logo" src="../img/pngsuperheroe-removebg-preview.png" alt="">
+            </a>
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="principal.html" id="principal" class="nav-link px-2 link-secondary">Home</a></li>
+                <li><a href="#i" class="nav-link px-2 link-dark">Personajes</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">Blog</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">Contacto</a></li>
             </ul>
-        </nav>
+        <!-- </nav> -->
     </header>
     <header>
-        <h1>Crud Heroes</h1>
+        <h1 class="fw-bold mb-0 fs-2">Crud Heroes</h1>
     </header>
     <form id="fr">
         <div class="container">
-            <fieldset id="Informacion">
-                <h2>Informacion del SuperHeroe</h2>
+            <fieldset class="form-group" id="Informacion">
+                <h2 class="fw-bold mb-0 fs-2">Informacion del SuperHeroe</h2>
                 <div class="row">
                     <div class="col-lg-1">
-                    <label id="nmb">Nombre</label>
-                    <input type="text" id="nombre" placeholder="Ingrese nombre">
+                    <label class="form-label" id="nmb">Nombre</label>
+                    <input class="form-control" type="text" id="nombre" placeholder="Ingrese nombre">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-1">
-                <label id="al">Alias</label>
-                <input type="text" id="alias" placeholder="Ingrese alter-ego">
-            </div>
+                        <label class="form-label" id="al">Alias</label>
+                        <input class="form-control" type="text" id="alias" placeholder="Ingrese alter-ego">
+                    </div>
                 </div>
-                    <fieldset id="Editorial">
-                <div class="row">
-                        <label id="ed">Editorial</label>  
-                         <div class="col-sm-8">
+                <fieldset class="form-group" id="Editorial">
+                    <div class="row">
+                        <label class="form-label" id="ed">Editorial</label>  
+                            <div class="col-sm-8">
                             <label> 
-                            <img id="mrvlpng" src="../img/marvelpng.png" alt="">
+                                <img id="mrvlpng" src="../img/marvelpng.png" alt="">
                             </label> 
-                            <input type="radio" name="editorial" id="marvel" value="marvel">
+                            <input type="radio" name="rEditorial" id="marvel" value="marvel">
                         </div>
                         <div class="col-sm-8">
                             <label>
                                 <img id="dcpng" src="../img/DC_Comics_logo.svg.png" alt="">
                             </label>
-                            <input type="radio" name="editorial" id="dc" value="dc" checked>
+                            <input type="radio" name="rEditorial" id="dc" value="dc" checked>
                         </div>
-                </div>
-                    </fieldset>
+                    </div>
+                </fieldset>
                     <div class="row">
                         <div class="col-lg-1">
-                <label id="frz">Fuerza</label>
+                <label class="form-label" id="frz">Fuerza</label>
                 <input type="range" id="fuerza">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-1">
-                <label id="arma">Arma</label>
-                <select id="armas"></select>
+                <label class="form-label" id="arma">Arma</label>
+                <select class="form-select form-select-sm"  id="armas"></select>
                         </div>
                     </div>
                 <div class="form-group">
                     <div class="col-md-12 text-center">
                         <section id="botones">
-                    <input type="button" value="Guardar" id="guardar">
-                    <input type="button" value="Cancelar" id="cancelar">
+                    <input class="btn btn-dark rounded-pill px-3" type="button" value="Guardar" id="guardar">
+                    <input class="btn btn-dark rounded-pill px-3" type="button" value="Cancelar" id="cancelar">
+                    <input class="btn btn-dark rounded-pill px-3" type="button" value="Borrar" id="borrar">
                 </section>
                 </div>
                 </div>
             </fieldset>
         </div>
     </form>
-    <div id="spinner"></div>
     <div class="container">    
         <div class="row">
             <div class="col-lg-3">
-                <label id="filtrarEditorial">Filtrar editorial</label>
-                <select id="sfiltrarEditorial"></select>
+                <label class="form-label" id="filtrarEditorial">Filtrar editorial</label>
+                <select class="btn btn-dark dropdown-toggle form-select form-select-sm" id="sfiltrarEditorial"></select>
             </div>
             <div class="col-lg-3">
-                <label id="promedioFuerza">Promedio</label>
-                <input type="text" id="tpromedioFuerza">
+                <label class="form-label" id="promedioFuerza">Promedio</label>
+                <input class="form-control" type="text" id="tpromedioFuerza" readonly>
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label" id="maximaFuerza">Máxima</label>
+                <input class="form-control" type="text" id="tmaximaFuerza" readonly>
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label" id="minimaFuerza">Mínima</label>
+                <input class="form-control" type="text" id="tminimaFuerza" readonly>
             </div>
         </div>
     </div>
-
+    <hr>
     <div class="container" id="contenedor">
         <div class="row">
             <div class="col-2">
                 <label >Nombre</label>
-                <input type="checkbox"  checked id="nombre" name="nombre">
+                <input type="checkbox" id="nombre" name="nombre">
             </div>
             <div class="col-2">
                 <label >Alias</label>
-                <input type="checkbox"  checked id="alias" name="alias">
+                <input type="checkbox" id="alias" name="alias">
             </div>
             <div class="col-2">
                 <label >Editorial</label>
-                <input  type="checkbox" checked id="editorial" name="editorial">
+                <input  type="checkbox" id="editorial" name="editorial">
             </div>
             <div class="col-2">
                 <label >Fuerza</label>
-                <input  type="checkbox" checked id="fuerza" name="fuerza">
+                <input  type="checkbox" id="fuerza" name="fuerza">
             </div>
             <div class="col-2">
                 <label >Armas</label>
-                <input type="checkbox"  checked id="armas" name="armas">
+                <input type="checkbox" id="armas" name="armas">
             </div>
         </div>
     </div>
+    <div class="oculto" id="spinner"></div>
     <div class="container" id="tTabla"></div>
-    <footer>
-        <nav id="nav">
-            <ul>
-                <li><a href="PrimerParcial/principal.html" onclick="seleccionar()">Home</a></li>
-                <li><a href="#i">Personajes</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Contacto</a></li>
+    <footer class="py-3 my-4">
+        <nav id="nav" >
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="principal.html" id="principal" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="#i" class="nav-link px-2 text-body-secondary">Personajes</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Blog</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Contacto</a></li>
             </ul>
         </nav>
-        <p>Laboratorio III -Todos los Derechos Reservados &copy;</p>
+        <p class="text-center text-body-secondary">Laboratorio III -Todos los Derechos Reservados &copy;</p>
     </footer>
 </body>
 </html>

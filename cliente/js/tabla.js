@@ -10,6 +10,7 @@ export const CrearTabla = (array) =>
         tabla.classList.add('table-responsive');
         tabla.classList.add('table-striped');
         tabla.classList.add('table-bordered');
+        
         return tabla;
     }
 }

@@ -3,7 +3,8 @@ const heroes = JSON.parse(localStorage.getItem('heroes')) || [];
 
 window.addEventListener('DOMContentLoaded', Generar);
 
-function Generar() {
+function Generar(evento) {
+    evento.preventDefault();
     const formulario= document.getElementById('fr');
 
     heroes.forEach((heroe) => {
@@ -21,8 +22,6 @@ function Generar() {
         editorial.textContent ="Editorial: " + heroe.editorial;
         fuerza.textContent= "Fuerza:  " + heroe.fuerza;
         arma.textContent = "Arma: " + heroe.armas;
-
-
 
         ficha.appendChild(nombre);
         ficha.appendChild(alias);
