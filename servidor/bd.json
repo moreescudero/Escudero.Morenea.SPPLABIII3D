@@ -20,8 +20,8 @@
       "id": 3,
       "nombre": "Caritta",
       "alias": "DEXTROSE MONOHYDRATE",
-      "editorial": "marvel",
-      "fuerza": "88",
+      "editorial": "dc",
+      "fuerza": "85",
       "armas": "Espada"
     },
     {
@@ -36,17 +36,9 @@
       "id": 5,
       "nombre": "Glennis",
       "alias": "Papaya",
-      "editorial": "dc",
-      "fuerza": 25,
-      "armas": "Martillo"
-    },
-    {
-      "id": 6,
-      "nombre": "more",
-      "alias": "Ibuprofeno",
       "editorial": "marvel",
-      "fuerza": "70",
-      "arma": "Espada"
+      "fuerza": "25",
+      "armas": "Arma de Fuego"
     }
   ]
 }
