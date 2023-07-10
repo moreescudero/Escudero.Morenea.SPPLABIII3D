@@ -42,7 +42,7 @@
                         <input class="form-control" type="text" id="alias" placeholder="Ingrese alter-ego">
                     </div>
                 </div>
-                <fieldset class="form-group" id="Editorial">
+                <fieldset class="form-group mt-4" id="Editorial">
                     <div class="row">
                         <label class="form-label" id="ed">Editorial</label>  
                             <div class="col-sm-8">
@@ -105,28 +105,30 @@
     </div>
     <hr>
     <div class="container" id="contenedor">
-        <div class="row">
-            <div class="col-2">
-                <label >Nombre</label>
-                <input type="checkbox" id="nombre" name="nombre">
+        <form action="/form/submit" method="post"></form>
+            <div class="row bg-dark black">
+                <div class="col-md-2">
+                    <label class="text-light col-lg-4 control-label">Nombre</label>
+                    <input type="checkbox" checked id="nombre" name="nombre">
+                </div>
+                <div class="col-md-2">
+                    <label class="text-light col-lg-4 control-label">Alias</label>
+                    <input type="checkbox" checked id="alias" name="alias">
+                </div>
+                <div class="col-md-2">
+                    <label class="text-light col-lg-4 control-label">Editorial</label>
+                    <input  type="checkbox" checked id="editorial" name="editorial">
+                </div>
+                <div class="col-md-2">
+                    <label class="text-light col-lg-4 control-label">Fuerza</label>
+                    <input  type="checkbox" checked id="fuerza" name="fuerza">
+                </div>
+                <div class="col-md-2">
+                    <label class="text-light col-lg-4 control-label">Armas</label>
+                    <input type="checkbox" checked id="armas" name="armas">
+                </div>
             </div>
-            <div class="col-2">
-                <label >Alias</label>
-                <input type="checkbox" id="alias" name="alias">
-            </div>
-            <div class="col-2">
-                <label >Editorial</label>
-                <input  type="checkbox" id="editorial" name="editorial">
-            </div>
-            <div class="col-2">
-                <label >Fuerza</label>
-                <input  type="checkbox" id="fuerza" name="fuerza">
-            </div>
-            <div class="col-2">
-                <label >Armas</label>
-                <input type="checkbox" id="armas" name="armas">
-            </div>
-        </div>
+        </form>
     </div>
     <div class="oculto" id="spinner"></div>
     <div class="container" id="tTabla"></div>

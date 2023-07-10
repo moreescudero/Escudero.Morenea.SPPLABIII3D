@@ -8,7 +8,6 @@ const URL= "http://localhost:3000/Heroes";
 const fr = document.getElementById('fr');
 const tabla = document.getElementById('tTabla');
 const principal = document.getElementById('principal');
-const spinner = document.getElementById('spinner');
 principal.addEventListener('click', (e) =>
 {
     e.preventDefault();
@@ -19,6 +18,8 @@ let id = 0;
 let bandera = false;
 
 let array = [];
+localStorage.setItem('heroes',JSON.stringify(array));
+
 
 window.addEventListener('DOMContentLoaded', () => 
 {
@@ -56,7 +57,7 @@ window.addEventListener('click', (x) =>
         id = indice;
         actualizar(seleccionado);
         bandera = true;
-        fr.borrar.addEventListener('click', (x) =>
+        fr.borrar.addEventListener('click', () =>
         {
             borrar(seleccionado);
         });
@@ -116,12 +117,11 @@ function actualizar(seleccionado)
     }
     const dc = document.getElementById('dc');
     const marvel = document.getElementById('marvel');
-    if(seleccionado.editorial == "dc")
-    {
+
+    if(seleccionado.editorial == "dc") {
         dc.checked = true;
     }
-    else
-    {
+    else {
         marvel.checked = true;
     }
 }
@@ -146,7 +146,7 @@ function guardar()
     const alias = document.getElementById('alias').value;
     const editorial = document.getElementsByName('rEditorial');
     const fuerza = document.getElementById('fuerza').value;
-    const arma = document.getElementById('armas').options[document.getElementById('armas').selectedIndex].text;
+    const armas = document.getElementById('armas').options[document.getElementById('armas').selectedIndex].text;
 
     let elemento;
 
@@ -158,9 +158,9 @@ function guardar()
         }
     });
 
-    if(nombre != "" && alias != "" && elemento != "" && fuerza != undefined && arma != "")
+    if(nombre != "" && alias != "" && elemento != "" && fuerza != undefined && armas != "")
     {
-        const heroe = new Superheroe(id, nombre, alias, elemento, fuerza, arma);
+        const heroe = new Superheroe(id, nombre, alias, elemento, fuerza, armas);
         console.log(heroe);
 
         const xhr = new XMLHttpRequest();
@@ -172,8 +172,10 @@ function guardar()
             }else{
             console.error("Error: " + xhr.status + "-" + xhr.statusText);
             }
-            spinner.classList.add("oculto");
+    
+            loader.classList.add("oculto");
         }
+    
         });
         xhr.open("POST", URL)
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -193,7 +195,6 @@ function modificar()
     {
         if(x.id == id)
         {
-            
             x.nombre = document.getElementById('nombre').value;
             x.alias = document.getElementById('alias').value;
             const editorial = document.getElementsByName('rEditorial');
@@ -202,11 +203,11 @@ function modificar()
 
             let elemento;
 
-            editorial.forEach((i) => 
+            editorial.forEach((e) => 
             {
-                if(i.checked)
+                if(e.checked)
                 {
-                    elemento = i.value;
+                    elemento = e.value;
                 }
             });
 
@@ -229,8 +230,7 @@ function modificar()
     Limpiar();
 }
 
-function Limpiar()
-{
+function Limpiar(){
     fr.nombre.value = "";
     fr.fuerza.value = 50;
     fr.alias.value = "";
@@ -240,8 +240,7 @@ function Limpiar()
     fr.guardar.value = "Guardar";
 }
 
-function generarId()
-{
+function generarId(){
     let id;
     for(var i = 0; i < array.length; i++)
     {
@@ -266,6 +265,7 @@ function MapeadoPromedio(elemento){
     const promedio = fuerzaTotal / elemento.length;
     txt.value= promedio;
 }
+
 
 function MapMaximaFuerza(elemento){
     let fuerza = [];
@@ -299,17 +299,22 @@ function MapMinimaFuerza(elemento){
             return fuerzaAnterior;
         }
     }, 0)
-    console.log(fuerza);
     const txt= document.getElementById("tminimaFuerza");
     txt.value= fuerzaMinima;
 }
 
-function checkear(){
+function checkear () {
     let aObtener = JSON.parse(localStorage.getItem('checkboxes'));
 
     if(aObtener != null) {
-        for(let i=0; i<aObtener.length; i++) {
+        for(let i = 0 ; i < aObtener.length ; i++) {
             checkboxes[i].checked = aObtener[i];
+        }
+    }
+    else
+    {
+        for(let i = 0 ; i < aObtener.length ; i++) {
+            checkboxes[i].checked = true;
         }
     }
     filtrarAtributos();
@@ -321,8 +326,7 @@ async function GetHeroes (url) {
         let rta= await fetch(url);
         if(!rta.ok) throw Error("Error: " + rta.status + "-" + rta.statusText);
         array= await rta.json();
-        console.log(array);
-        tabla.appendChild(CrearTabla(array));
+        tabla.appendChild(CrearTabla(array)); 
         MapeadoPromedio(array);
         MapMaximaFuerza(array);
         MapMinimaFuerza(array);
@@ -331,44 +335,37 @@ async function GetHeroes (url) {
         localStorage.setItem('heroes', JSON.stringify(array));
     } catch (err) {
         console.error(err.message);
-    }finally {
+    }finally { 
         spinner.classList.add("oculto");
     }
-  }
+}
 
 const checkboxes = document.querySelectorAll('#contenedor input[type="checkbox"]');
 checkboxes.forEach(e=> {e.addEventListener('change', filtrarAtributos) });
 
-function guardarCheckboxes(){
-    var aCheckboxes = [];
-
-    checkboxes.forEach((x) => {
-        aCheckboxes.push(x.checked);
-    });
-    localStorage.setItem('checkboxes', JSON.stringify(aCheckboxes));
-}
-
 function filtrarAtributos() {
-  const checkboxes = document.querySelectorAll('#contenedor input[type="checkbox"]');
-  let atributosSeleccionados = Array.from(checkboxes)
-    .filter(checkbox => checkbox.checked)
-    .map(checkbox => checkbox.name);
+    const checkboxes = document.querySelectorAll('#contenedor input[type="checkbox"]');
+    let checks = [];
+    let atributosSeleccionados = Array.from(checkboxes)
+      .filter(checkbox => {
+        checks.push(checkbox.checked);
+        return checkbox.checked
+      })
+      .map(checkbox => checkbox.name);
     if (!atributosSeleccionados.includes('id')) {
-      let array=[];
-      atributosSeleccionados.forEach(e =>{ array.push(e);});
-      atributosSeleccionados = array;
+    let array=[];
+    array.push('id');
+    atributosSeleccionados.forEach(e =>{ array.push(e);});
+    atributosSeleccionados = array;
     }
-
-  const resultado = array.map(obj => {
-    const nuevoObjeto = {};
-    atributosSeleccionados.forEach(atributo => {
-      nuevoObjeto[atributo] = obj[atributo];
+    
+    const resultado = array.map(obj => {
+      const nuevoObjeto = {};
+      atributosSeleccionados.forEach(atributo => {
+        nuevoObjeto[atributo] = obj[atributo];
+      });
+      return nuevoObjeto;
     });
-    return nuevoObjeto;
-  });
-  ModificarTabla(tabla, resultado);
-  guardarCheckboxes();
+    ModificarTabla(tabla, resultado);
+    localStorage.setItem("checkboxes", JSON.stringify(checks));
 }
-
-
-
